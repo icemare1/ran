@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我跟然然的纪念</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            color: #333;
+            text-align: center;
+        }
+        #logo {
+            margin-top: 20px;
+        }
+        #logo img {
+            max-height: 50px;
+            width: auto;
+        }
+        #counter {
+            margin: 10px;
+            font-size: 12px;
+            color: #555;
+        }
+        #search {
+            margin: 20px;
+        }
+        #search input, #search button {
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #diary {
+            margin-top: 20px;
+            width: 90%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+        .diary-entry {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .diary-entry img {
+            width: 100px;
+            height: 70px;
+            border-radius: 10px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+        .diary-content {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        #diary-select {
+            margin: 20px 0;
+        }
+        #diary-select select {
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+        #fortune-button {
+            margin-right: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: red;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        #fortune-result {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        @media (max-width: 600px) {
+            .diary-entry {
+                flex-direction: column;
+                text-align: center;
+            }
+            .diary-entry img {
+                margin: 0 0 10px 0;
+            }
+        }
+        /* iframe 样式 */
+        #doc-container {
+            margin-top: 40px;
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="logo">
+        <img src="logo.png" alt="Logo">
+    </div>
+
+    <div id="counter">
+        我跟然然认识了 <span id="daysCount"></span> 天
+    </div>
+
+    <div id="search">
+        <form action="https://www.baidu.com/s" method="get" target="_blank">
+            <input type="text" name="wd" placeholder="百度一下" style="width:300px;">
+            <button type="submit">百度搜索</button>
+        </form>
+    </div>
+
+    <!-- 运势抽取与日期选择框 -->
+    <div id="diary-select">
+        <button id="fortune-button" onclick="drawFortune()">抽取今日运势</button>
+        <label for="diaryDate">选择日记日期：</label>
+        <select id="diaryDate" onchange="showDiary()">
+            <option value="2">2024年10月20日</option>
+            <option value="1">2024年10月2日</option>
+        </select>
+    </div>
+
+    <!-- 运势结果显示 -->
+    <div id="fortune-result"></div>
+
+    <!-- 日记内容 -->
+    <div id="diary">
+        <div id="diary-entry-1" class="diary-entry">
+            <img src="image1.jpg" alt="Diary Image 1">
+            <div class="diary-content">
+                国庆，反正生态动物园是我肯定要带你来看的，不知道为啥就一只小熊猫，我也纳闷，不过好在抓拍到了它在树上的样子，还去看了很多有意思的东西（锦鲤幸运！）
+            </div>
+        </div>
+
+        <div id="diary-entry-2" class="diary-entry" style="display:none;">
+            <img src="image2.jpg" alt="Diary Image 2">
+            <div class="diary-content">
+                然然在干嘛！！
+            </div>
+        </div>
+    </div>
+
+    <!-- 嵌入腾讯文档 -->
+    <iframe id="doc-container" src="https://docs.qq.com/doc/DZllOaUt6ZXFaT2ls" title="腾讯文档"></iframe>
+
+    <script>
+        function calculateDaysSince(startDate) {
+            const today = new Date();
+            const start = new Date(startDate);
+            const timeDiff = today - start;
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            return days;
+        }
+
+        document.getElementById('daysCount').innerText = calculateDaysSince('2024-09-05');
+
+        // 根据选择框显示对应日期的日记
+        function showDiary() {
+            const allEntries = document.querySelectorAll('.diary-entry');
+            allEntries.forEach(entry => entry.style.display = 'none'); // 隐藏所有日记
+
+            const selectedValue = document.getElementById('diaryDate').value;
+            document.getElementById('diary-entry-' + selectedValue).style.display = 'flex'; // 显示对应日记
+        }
+
+        // 页面加载时，默认显示最新的日记
+        document.addEventListener("DOMContentLoaded", function() {
+            showDiary();
+        });
+
+        // 今日运势
+        function drawFortune() {
+            const fortunes = [
+                "大安\n五行属木\n方位: 东\n青龙\n数字: 1,5,7\n有静止、心安、吉祥之意\n口诀: 大安事事昌，求谋在东方，失物去不远，宅舍保平安，行人身未动，病者主无妨，将军回田野，仔细更推详",
+                "留连\n五行属水\n方位: 北\n颜色: 黑\n玄武\n数字: 2,8,10\n有暗昧不明、延迟、纠缠、拖延之意\n口诀: 留连事难成，求谋日未明，官事凡宜缓，去者未回程，失物南方见，急讨方心称，防口舌，人口且平平",
+                "速喜\n五行属火\n方位: 南\n颜色: 红\n数字: 3,6,9\n有快速、吉利、时机已到之意\n口诀: 速喜喜来临，求财向南行，失物申未午，逢人路上寻，官事有福德，病者无祸侵，田宅六畜吉，行人有信音",
+                "赤口\n五行属金\n方位: 西\n颜色: 白\n白虎\n数字: 4,7,10\n有不吉、凶险之意\n口诀: 赤口主口舌，官非切宜防，失物急去寻，行人有惊慌，鸡犬多作怪，病者出西方，防咀咒，诚恐染瘟皇",
+                "小吉\n五行属木\n方位: 六合\n数字: 1,5,7\n有和合、吉利之意\n口诀: 小吉最吉昌，路上好商量，阴人来报喜，失物在坤方，行人即便至，交易甚是强，凡事皆和合，病者祈上苍",
+                "空亡\n五行属土\n方位: 中央\n颜色: 黄\n勾陈\n数字: 3,6,9\n有不吉、无果之意\n口诀: 空亡事不祥，阴人多乖张，求财无利益，行人有灾殃，失物寻一见，官事有刑伤，病人逢暗鬼，祈解保安康"
+            ];
+            const randomIndex = Math.floor(Math.random() * fortunes.length);
+            const selectedFortune = fortunes[randomIndex];
+            document.getElementById('fortune-result').innerText = `今日运势：\n${selectedFortune}`;
+        }
+    </script>
+
+</body>
+</html>
