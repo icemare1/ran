@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我跟然然的纪念</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            color: #333;
+            text-align: center;
+        }
+        #logo {
+            margin-top: 20px;
+        }
+        #logo img {
+            max-height: 50px;
+            width: auto;
+        }
+        #counter {
+            margin: 10px;
+            font-size: 12px;
+            color: #555;
+        }
+        #search {
+            margin: 20px;
+        }
+        #search input, #search button {
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #diary {
+            margin-top: 20px;
+            width: 90%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+        .diary-entry {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .diary-entry img {
+            width: 100px;
+            height: 70px;
+            border-radius: 10px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+        .diary-content {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        #diary-select {
+            margin: 20px 0;
+        }
+        #diary-select select {
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+        @media (max-width: 600px) {
+            .diary-entry {
+                flex-direction: column;
+                text-align: center;
+            }
+            .diary-entry img {
+                margin: 0 0 10px 0;
+            }
+        }
+        /* iframe 样式 */
+        #doc-container {
+            margin-top: 40px;
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="logo">
+        <img src="logo.png" alt="Logo">
+    </div>
+
+    <div id="counter">
+        我跟然然认识了 <span id="daysCount"></span> 天
+    </div>
+
+    <div id="search">
+        <form action="https://www.baidu.com/s" method="get" target="_blank">
+            <input type="text" name="wd" placeholder="百度一下" style="width:300px;">
+            <button type="submit">百度搜索</button>
+        </form>
+    </div>
+
+    <!-- 日期选择框 -->
+    <div id="diary-select">
+        <label for="diaryDate">选择日记日期：</label>
+        <select id="diaryDate" onchange="showDiary()">
+            <option value="2">2024年10月20日</option>
+            <option value="1">2024年10月2日</option>
+        </select>
+    </div>
+
+    <!-- 日记内容 -->
+    <div id="diary">
+        <div id="diary-entry-1" class="diary-entry">
+            <img src="image1.jpg" alt="Diary Image 1">
+            <div class="diary-content">
+                国庆，反正生态动物园是我肯定要带你来看的，不知道为啥就一只小熊猫，我也纳闷，不过好在抓拍到了它在树上的样子，还去看了很多有意思的东西（锦鲤幸运！）
+            </div>
+        </div>
+
+        <div id="diary-entry-2" class="diary-entry" style="display:none;">
+            <img src="image2.jpg" alt="Diary Image 2">
+            <div class="diary-content">
+                然然在干嘛！！
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+    <!-- 嵌入腾讯文档 -->
+    <iframe id="doc-container" src="https://docs.qq.com/doc/DZllOaUt6ZXFaT2ls" title="腾讯文档"></iframe>
+
+    <script>
+        function calculateDaysSince(startDate) {
+            const today = new Date();
+            const start = new Date(startDate);
+            const timeDiff = today - start;
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            return days;
+        }
+
+        document.getElementById('daysCount').innerText = calculateDaysSince('2024-09-05');
+
+        // 根据选择框显示对应日期的日记
+        function showDiary() {
+            const allEntries = document.querySelectorAll('.diary-entry');
+            allEntries.forEach(entry => entry.style.display = 'none'); // 隐藏所有日记
+
+            const selectedValue = document.getElementById('diaryDate').value;
+            document.getElementById('diary-entry-' + selectedValue).style.display = 'flex'; // 显示对应日记
+        }
+
+        // 页面加载时，默认显示最新的日记
+        document.addEventListener("DOMContentLoaded", function() {
+            showDiary();
+        });
+    </script>
+
+</body>
+</html>
