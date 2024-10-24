@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>何岩然然官网</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+        #logo {
+            margin-top: 20px;
+        }
+        #logo img {
+            max-height: 50px;
+            width: auto;
+        }
+        #counter {
+            margin: 10px;
+            font-size: 12px;
+            color: #555;
+        }
+        #search {
+            margin: 20px;
+        }
+        #search input, #search button {
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #diary-select {
+            margin: 20px 0;
+        }
+        #diary-select button {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: red;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        #memo-button {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: grey;
+            color: white;
+            font-size: 16px;
+            margin-left: 10px;
+            text-decoration: none;
+        }
+        #fortune-result {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        #love-quotes {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #555;
+            font-size: 12px;
+            text-align: center;
+        }
+        .fade {
+            opacity: 0;
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="logo">
+        <img src="logo.png" alt="Logo">
+    </div>
+
+    <div id="counter">
+        我们认识了 <span id="daysCount"></span> 天
+    </div>
+
+    <div id="search">
+        <form action="https://www.baidu.com/s" method="get" target="_blank">
+            <input type="text" name="wd" placeholder="百度一下" style="width:300px;">
+            <button type="submit">百度搜索</button>
+        </form>
+    </div>
+
+    <!-- 运势抽取与备忘录按钮 -->
+    <div id="diary-select">
+        <button id="fortune-button" onclick="drawFortune()">抽取今日运势</button>
+        <a href="https://docs.qq.com/doc/DZllOaUt6ZXFaT2ls" id="memo-button" target="_blank">备忘录</a>
+        <a href="https://chat18.aichatos10.com/#/chat/" id="memo-button" target="_blank">AI对话</a>
+        <a href="https://www.duse1.com/" id="memo-button" target="_blank">影视</a>
+        <a href="https://www.google.com/maps/?hl=zh-cn" id="memo-button" target="_blank">环游世界</a>
+    </div>
+
+    <!-- 运势结果显示 -->
+    <div id="fortune-result"></div>
+
+    <!-- 爱情句子 -->
+    <div id="love-quotes">
+        <div class="fade" id="quote1">今生今世，只会爱你</div>
+        <div class="fade" id="quote2">来生来世，永远爱你</div>
+        <div class="fade" id="quote3">三生三世，永恒不变</div>
+        <div id="quote4" style="display:none;">爱情是两情相悦的手牵手，是相濡以沫的亲亲我我，是真情的心有灵犀，是相伴一生的终身伴侣，是一根红线系着我和你的情丝相聚，让爱相伴，让爱厮守，让真情常在。</div>
+        <div id="quote5" style="display:none;">爱情是两个人共同的追求和信仰，只有彼此坚定、才能走到更远的未来。</div>
+    </div>
+
+    <script>
+        function calculateDaysSince(startDate) {
+            const today = new Date();
+            const start = new Date(startDate);
+            const timeDiff = today - start;
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            return days;
+        }
+
+        document.getElementById('daysCount').innerText = calculateDaysSince('2024-09-05');
+
+        // 今日运势
+        function drawFortune() {
+            const fortunes = [
+                "大安\n五行属木\n方位: 东\n青龙\n数字: 1,5,7\n有静止、心安、吉祥之意\n口诀: 大安事事昌，求谋在东方，失物去不远，宅舍保平安，行人身未动，病者主无妨，将军回田野，仔细更推详",
+                "留连\n五行属水\n方位: 北\n颜色: 黑\n玄武\n数字: 2,8,10\n有暗昧不明、延迟、纠缠、拖延之意\n口诀: 留连事难成，求谋日未明，官事凡宜缓，去者未回程，失物南方见，急讨方心称，防口舌，人口且平平",
+                "速喜\n五行属火\n方位: 南\n颜色: 红\n数字: 3,6,9\n有快速、吉利、时机已到之意\n口诀: 速喜喜来临，求财向南行，失物申未午，逢人路上寻，官事有福德，病者无祸侵，田宅六畜吉，行人有信音",
+                "赤口\n五行属金\n方位: 西\n颜色: 白\n白虎\n数字: 4,7,10\n有不吉、凶险之意\n口诀: 赤口主口舌，官非切宜防，失物急去寻，行人有惊慌，鸡犬多作怪，病者出西方，防咀咒，诚恐染瘟皇",
+                "小吉\n五行属木\n方位: 六合\n数字: 1,5,7\n有和合、吉利之意\n口诀: 小吉最吉昌，路上好商量，阴人来报喜，失物在坤方，行人即便至，交易甚是强，凡事皆和合，病者祈上苍",
+                "空亡\n五行属土\n方位: 中央\n颜色: 黄\n勾陈\n数字: 3,6,9\n有不吉、无果之意\n口诀: 空亡事不祥，阴人多乖张，求财无利益，行人有灾殃，失物寻一见，官事有刑伤，病人逢暗鬼，祈解保安康"
+            ];
+            const randomIndex = Math.floor(Math.random() * fortunes.length);
+            const selectedFortune = fortunes[randomIndex];
+            document.getElementById('fortune-result').innerText = `今日运势：\n${selectedFortune}`;
+        }
+
+        // 爱情句子切换
+        const quotes = [
+            "今生今世，只会爱你",
+            "来生来世，永远爱你",
+            "三生三世，永恒不变",
+            "爱情是两情相悦的手牵手，是相濡以沫的亲亲我我，是真情的心有灵犀，是相伴一生的终身伴侣，是一根红线系着我和你的情丝相聚，让爱相伴，让爱厮守，让真情常在。",
+            "爱情是两个人共同的追求和信仰，只有彼此坚定、才能走到更远的未来。"
+        ];
+
+        let currentQuote = 0;
+
+        function fadeQuotes() {
+            const quotesDivs = document.querySelectorAll("#love-quotes div");
+            quotesDivs.forEach((div, index) => {
+                div.style.display = index === currentQuote ? 'block' : 'none';
+                div.classList.remove('fade');
+            });
+
+            setTimeout(() => {
+                quotesDivs[currentQuote].classList.add('fade');
+            }, 1000);
+
+            currentQuote = (currentQuote + 1) % quotes.length;
+            setTimeout(fadeQuotes, 10000);
+        }
+
+        fadeQuotes();
+    </script>
+
+</body>
+</html>
