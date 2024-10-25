@@ -16,22 +16,50 @@
             height: 100vh;
             margin: 0;
             position: relative;
+            overflow: hidden;
         }
+
+        #background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://pic.imgdb.cn/item/671ae89bd29ded1a8c846c8d.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            animation: scaleDown 20s infinite alternate; /* 背景图缓慢缩小的动画 */
+        }
+
+        @keyframes scaleDown {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(0.95); /* 缩小到95%大小 */
+            }
+        }
+
         #logo {
             margin-top: 20px;
         }
+
         #logo img {
             max-height: 50px;
             width: auto;
         }
+
         #counter {
             margin: 10px;
             font-size: 12px;
             color: #555;
         }
+
         #search {
             margin: 20px;
         }
+
         #search input {
             border-radius: 10px;
             border: 1px solid #ccc;
@@ -39,15 +67,18 @@
             font-size: 16px;
             width: 200px;
         }
+
         #search button {
             border-radius: 10px;
             border: 1px solid #ccc;
             padding: 10px;
             font-size: 16px;
         }
+
         #diary-select {
             margin: 20px 0;
         }
+
         #diary-select button {
             padding: 10px;
             border-radius: 10px;
@@ -57,6 +88,7 @@
             border: none;
             cursor: pointer;
         }
+
         #memo-button {
             padding: 10px;
             border-radius: 10px;
@@ -66,11 +98,13 @@
             margin-left: 10px;
             text-decoration: none;
         }
+
         #fortune-result {
             margin-top: 10px;
             font-size: 14px;
             color: #333;
         }
+
         #quote-container {
             position: absolute;
             bottom: 50px;
@@ -80,10 +114,12 @@
             width: 100%;
             overflow: hidden;
         }
+
         .quote {
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
+
         #quote-container img {
             margin-top: 30px;
             height: 70px;
@@ -92,6 +128,8 @@
     </style>
 </head>
 <body>
+
+    <div id="background"></div> <!-- 背景图片 -->
 
     <div id="logo">
         <img src="logo.png" alt="Logo">
@@ -121,13 +159,12 @@
 
     <!-- 底部渐变切换文本 -->
     <div id="quote-container">
-                <img src="mini.gif" alt="mini logo">
+        <img src="mini.gif" alt="mini logo">
         <div class="quote" id="quote1">照片提取码 hyrr 你知道是谁的缩写的</div>
         <div class="quote" id="quote2">今生今世，只会爱你 来生来世，永远爱你 三生三世，永恒不变</div>
-        <div class="quote" id="quote2">笨蛋 别忘了睡觉时打我电话</div>
-        <div class="quote" id="quote3">两情若是久长时，又岂在朝朝暮暮</div>
-        <div class="quote" id="quote2">每一天、每时每刻都很想你</div>
-
+        <div class="quote" id="quote3">笨蛋 别忘了睡觉时打我电话</div>
+        <div class="quote" id="quote4">两情若是久长时，又岂在朝朝暮暮</div>
+        <div class="quote" id="quote5">每一天、每时每刻都很想你</div>
     </div>
 
     <script>
@@ -166,9 +203,8 @@
             quotes[currentQuote].style.opacity = '1';
             currentQuote = (currentQuote + 1) % quotes.length;
         }
-        setInterval(showQuote, 10000); // 每10秒切换一次
-        showQuote(); // 初始化显示第一个
+        setInterval(showQuote, 5000);
+        showQuote(); // 初始化显示第一个文本
     </script>
-
 </body>
 </html>
